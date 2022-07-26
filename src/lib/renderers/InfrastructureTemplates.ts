@@ -127,6 +127,24 @@ function apiDelete<TResponse>(
   };
   return fetchJson<TResponse>(\`\${url}\${maybeQueryString}\`, requestOptions);
 }
+
+function apiDelete<TResponse>(
+  url: string,
+  headers: Headers,
+  paramsObject: ParamsObject = {}
+) {
+  updateHeaders(headers);
+  const queryString = Object.entries(paramsObject)
+    .map(([key, val]) => \`\${key}=\${val}\`)
+    .join("&");
+  const maybeQueryString = queryString.length > 0 ? \`?\${queryString}\` : "";
+  const requestOptions = {
+    method: "DELETE",
+    headers,
+    redirect: "follow",
+  };
+  return fetchJson<TResponse>(\`\${url}\${maybeQueryString}\`, requestOptions);
+}
 // ARCHITECTURE END
 `;
 };
